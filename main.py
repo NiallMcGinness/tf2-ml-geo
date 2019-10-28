@@ -11,8 +11,8 @@ from data_gen_utils import  create_data
 from model_utils import create_model
 
 
-dataset_size = 100
-image_size = 128
+dataset_size = 10000
+image_size = 64
 images, labels = create_data( dataset_size, image_size) 
 
 images = tf.cast(images, tf.float32) / 255

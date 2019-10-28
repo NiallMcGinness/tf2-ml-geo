@@ -17,12 +17,21 @@ def get_points(w):
 
 def gen_image_label_pair(w):
     number_of_channels = 1
-    x1, x2, x3 =   get_points(w)
+    #x1, x2, x3 =   get_points(w)
+    # need to check that points are far enough apart 
+    # want to avoid very sharp angles
+    narrow_angle = True
+    while narrow_angle:
+        x1, x2, x3 =   get_points(w)
+        d1 = distance(x1, x2)
+        d2 = distance(x2, x3)
+        if d1 > (d2 * 0.3) and d1 < (d2 * 1.5):
+            narrow_angle  = False
     cent = centroid_traingle(x1, x2, x3)
     img = np.zeros((w,w, number_of_channels), dtype=np.int32)
     pts = np.array([x1, x2, x3], dtype=np.int32 )
     pts = pts.reshape(-1,1,2)
-    img = cv2.fillPoly(img,[pts], 255)
+    img = cv2.polylines(img,[pts], 1, 255 , 2)
     return img, cent
 
 def create_data(dataset_size, image_size):
