@@ -11,7 +11,7 @@ from data_gen_utils import  create_data
 from model_utils import create_model
 
 
-dataset_size = 10000
+dataset_size = 10
 image_size = 64
 images, labels = create_data( dataset_size, image_size) 
 
@@ -35,6 +35,7 @@ def train_step(images,labels):
         loss = MSE(predictions, labels)
     gradients = tape.gradient(loss, model.trainable_variables)
     optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    return loss
 
 
 checkpoint_dir = './training_checkpoints'
@@ -45,12 +46,15 @@ checkpoint = tf.train.Checkpoint(optimizer=optimizer, model=model)
 def train(dataset, epochs):
     for epoch in range(epochs):
         start = time.time()
+        step_loss = 0
         for batch in dataset:
             img_batch, label_batch = batch
-            train_step(img_batch, label_batch)
+            step_loss = train_step(img_batch, label_batch)
         if (epoch + 1) % 15 == 0:
             checkpoint.save(file_prefix = checkpoint_prefix)
             print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
+            print(step_loss)
+
 
 
 

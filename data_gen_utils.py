@@ -15,6 +15,14 @@ def get_points(w):
     C = [ randint( min_point, max_point  ) , randint( min_point, max_point  ) ]
     return A,B,C
 
+def distance(A,B):
+    dx = A[0] - B[0]
+    dy = A[1] - B[1]
+    dist = math.sqrt(dx**2 + dy**2)
+    print(dist)
+    return dist
+
+
 def gen_image_label_pair(w):
     number_of_channels = 1
     #x1, x2, x3 =   get_points(w)
