@@ -1,5 +1,6 @@
 from random import randint
 import numpy as np
+import math
 import cv2
 
 def centroid_traingle(A,B,C):
@@ -19,7 +20,7 @@ def distance(A,B):
     dx = A[0] - B[0]
     dy = A[1] - B[1]
     dist = math.sqrt(dx**2 + dy**2)
-    print(dist)
+    #print(dist)
     return dist
 
 

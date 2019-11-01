@@ -10,8 +10,12 @@ import time
 from data_gen_utils import  create_data
 from model_utils import create_model
 
+# enable automatic 16 bit floating point  precisionm , automaticu mixed floating point  ( AMP ) 
+# 
+policy = tf.keras.mixed_precision.experimental.Policy('mixed_float16')
+tf.keras.mixed_precision.experimental.set_policy(policy)
 
-dataset_size = 10
+dataset_size = 10000
 image_size = 64
 images, labels = create_data( dataset_size, image_size) 
 
@@ -50,10 +54,10 @@ def train(dataset, epochs):
         for batch in dataset:
             img_batch, label_batch = batch
             step_loss = train_step(img_batch, label_batch)
-        if (epoch + 1) % 15 == 0:
+        if (epoch + 1) % 5 == 0:
             checkpoint.save(file_prefix = checkpoint_prefix)
             print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
-            print(step_loss)
+            print('loss : {} '.format(tf.reduce_sum(step_loss) ) )
 
 
 
