@@ -40,7 +40,7 @@ def gen_image_label_pair(w):
     img = np.zeros((w,w, number_of_channels), dtype=np.int32)
     pts = np.array([x1, x2, x3], dtype=np.int32 )
     pts = pts.reshape(-1,1,2)
-    img = cv2.polylines(img,[pts], 1, 255 , 2)
+    img = cv2.fillPoly(img,[pts], 255)
     return img, cent
 
 def create_data(dataset_size, image_size):
